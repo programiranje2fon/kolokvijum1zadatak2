@@ -42,4 +42,28 @@ Napraviti javnu klasu **ProbaVodicKrozRestorane** u paketu **restoran.proba** ko
 
 ** NAPOMENA: PO ZAVRŠETKU ZADATKA OBAVEZNO TESTIRATI REŠENJE POZIVANJEM AUTOMATIZOVANIH TESTOVA (desnim tasterom na naziv projekta, Run as - Java Application - PokreniTestove)**
 
+U produžetku teksta je dat kod klase sa metodom koja kao parametar dobija niz String vrednosti i na ekranu ispisuje sve String-ove ali dijagonalno, jedan pored drugog: u prvom redu su samo prva slova svih stringova, u drugom redu prvo jedan blanko znak pa sva druga slova itd. Smatrati da nijedan element niza nije null niti duži od 5 znakova. Na primer, ako metoda kao ulaz dobije niz sa četiri String vrednosti {"PAS", "MACKA", "LOPTA", "DRVO"}konačan izlaz na
+ekranu treba da izgleda ovako:
 
+	PMLD
+	 AAOR
+	  SCPV
+	   KTO
+	    AA
+
+Dati kod se kompajlira, ali ne radi to šta treba. Napraviti u Eclipse-u klasu **StringIspisivac2** u paketu **ispravka_koda**, prekucati u nju kod koji je dat i, uz minimalne izmene ga ispraviti tako da funkcioniše kako treba. Napraviti test klasu i, koristeći njenu main metodu, pozvati metodu **ispisiDijagonalno()** i proveriti njen rad.
+
+	package ispravka_koda;
+	
+	public class StringIspisivac2 {
+		public static void ispisiDijagonalno(String[] niz){
+			String prazno=""; int j=0;
+			while(j>5){
+			String s = null;
+			for(int i=0;i<niz.length;i++)
+				if (j < niz[i].length()) s = s + niz[j].charAt(i);
+				else s = s + " ";
+			System.out.println(prazno+s);
+			prazno = prazno + " ";j++;
+		}
+	} }
