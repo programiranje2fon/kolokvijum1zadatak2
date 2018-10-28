@@ -34,7 +34,7 @@ public class VodicKrozRestorane {
 	
 	public void napraviTopListu(VrstaHrane hrana, int godina) {
 		for (int i=0; i<restorani.length; i++)
-			if (restorani[i].getHrana().equals(hrana) &&
+			if (restorani[i]!=null && restorani[i].getHrana().equals(hrana) &&
 					godina == restorani[i].getDatumProcene().get(GregorianCalendar.YEAR) &&
 					restorani[i].getOcena() == 5)
 				System.out.println( restorani[i] );
@@ -42,8 +42,25 @@ public class VodicKrozRestorane {
 	
 	public Restoran[] napraviTopListu(VrstaHrane hrana) {
 		Restoran[] niz = new Restoran[10];
+		int brojac = 0;
 		
-		//int tekucaGodina = new GregorianCalendar().get(GregorianCalendar.YEAR);
+		int tekucaGodina = new GregorianCalendar().get(GregorianCalendar.YEAR);
+		
+		for (int i=0; i<restorani.length; i++)
+			if (restorani[i]!= null && restorani[i].getHrana().equals(hrana) &&
+					tekucaGodina == restorani[i].getDatumProcene().get(GregorianCalendar.YEAR) &&
+					restorani[i].getOcena() == 5 && brojac < 10) {
+				niz[brojac] = restorani[i];
+				brojac++;
+			}
+		
+		for (int i=0; i<restorani.length; i++)
+			if (restorani[i]!= null && restorani[i].getHrana().equals(hrana) &&
+					tekucaGodina == restorani[i].getDatumProcene().get(GregorianCalendar.YEAR) &&
+					restorani[i].getOcena() == 4 && brojac < 10) {
+				niz[brojac] = restorani[i];
+				brojac++;
+			}
 		
 		return niz;
 		
