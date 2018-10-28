@@ -17,6 +17,8 @@ import org.junit.runner.notification.Failure;
 public class PokreniTestove {
 
 	public static void main(String[] args) {
+		runTestsForClass(restoran.vrsta.VrstaHraneTest.class);
+		runTestsForClass(restoran.RestoranTest.class);
 		runTestsForClass(ispravka_koda.StringIspisivac2Test.class);
 	}
 
