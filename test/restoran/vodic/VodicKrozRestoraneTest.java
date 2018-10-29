@@ -5,12 +5,14 @@ import static org.junit.Assert.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Modifier;
+import java.util.GregorianCalendar;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import restoran.Restoran;
+import restoran.vrsta.VrstaHrane;
 import test.TestUtil;
 
 public class VodicKrozRestoraneTest {
@@ -123,12 +125,100 @@ public class VodicKrozRestoraneTest {
 
 	@Test(timeout = 2000)
 	public void metoda_napraviTopListuVrstaHraneInt() {
-		fail("Not yet implemented");
+		instance = new VodicKrozRestorane(10);
+		
+		GregorianCalendar datum = new GregorianCalendar(2007, 11, 1);
+		
+		Restoran r1 = new Restoran();
+		r1.setDatumProcene(datum);
+		r1.setNaziv("Restoran 1");
+		r1.setOcena(5);
+		r1.setHrana(VrstaHrane.INTERNACIONALNA);
+		
+		Restoran r2 = new Restoran();
+		r2.setDatumProcene(datum);
+		r2.setNaziv("Restoran 2");
+		r2.setOcena(5);
+		r2.setHrana(VrstaHrane.KINESKA);
+		
+		Restoran r3 = new Restoran();
+		r3.setDatumProcene(datum);
+		r3.setNaziv("Restoran 3");
+		r3.setOcena(4);
+		r3.setHrana(VrstaHrane.INTERNACIONALNA);
+		
+		Restoran r4 = new Restoran();
+		r4.setDatumProcene(new GregorianCalendar());
+		r4.setNaziv("Restoran 4");
+		r4.setOcena(5);
+		r4.setHrana(VrstaHrane.INTERNACIONALNA);
+		
+		Restoran r5 = new Restoran();
+		r5.setDatumProcene(datum);
+		r5.setNaziv("Restoran 5");
+		r5.setOcena(5);
+		r5.setHrana(VrstaHrane.INTERNACIONALNA);
+
+		instance.unesiRestoran(r1);
+		instance.unesiRestoran(r2);
+		instance.unesiRestoran(r3);
+		instance.unesiRestoran(r4);
+		instance.unesiRestoran(r5);
+		
+		instance.napraviTopListu(VrstaHrane.INTERNACIONALNA, 2007);
+		
+		assertEquals("Ako je uneto 5 restorana od kojih 2 odgovaraju kriterijumima za Internacionalnu"
+				+ " kuhinju"+ " i 2007 godinu, metoda umesto njih ispisuje",
+				r5.toString()+System.lineSeparator()+r1.toString()+System.lineSeparator(),
+				outContent.toString());
 	}
 
 	@Test(timeout = 2000)
 	public void metoda_napraviTopListuVrstaHrane() {
-		fail("Not yet implemented");
+		instance = new VodicKrozRestorane(10);
+		
+		GregorianCalendar datum = new GregorianCalendar(2007, 11, 1);
+		
+		Restoran r1 = new Restoran();
+		r1.setDatumProcene(new GregorianCalendar());
+		r1.setNaziv("Restoran 1");
+		r1.setOcena(5);
+		r1.setHrana(VrstaHrane.INTERNACIONALNA);
+		
+		Restoran r2 = new Restoran();
+		r2.setDatumProcene(datum);
+		r2.setNaziv("Restoran 2");
+		r2.setOcena(5);
+		r2.setHrana(VrstaHrane.KINESKA);
+		
+		Restoran r3 = new Restoran();
+		r3.setDatumProcene(datum);
+		r3.setNaziv("Restoran 3");
+		r3.setOcena(4);
+		r3.setHrana(VrstaHrane.INTERNACIONALNA);
+		
+		Restoran r4 = new Restoran();
+		r4.setDatumProcene(new GregorianCalendar());
+		r4.setNaziv("Restoran 4");
+		r4.setOcena(4);
+		r4.setHrana(VrstaHrane.INTERNACIONALNA);
+		
+		Restoran r5 = new Restoran();
+		r5.setDatumProcene(new GregorianCalendar());
+		r5.setNaziv("Restoran 5");
+		r5.setOcena(5);
+		r5.setHrana(VrstaHrane.INTERNACIONALNA);
+
+		instance.unesiRestoran(r1);
+		instance.unesiRestoran(r2);
+		instance.unesiRestoran(r3);
+		instance.unesiRestoran(r4);
+		instance.unesiRestoran(r5);
+		
+		Restoran[] niz2 = instance.napraviTopListu(VrstaHrane.INTERNACIONALNA);
+		Restoran[] niz3 = {r5, r1, r4, null, null, null, null, null, null, null};
+		
+		assertArrayEquals("Ocekivani i stvarni niz se ne poklapaju", niz3, niz2);
 	}
 
 }
