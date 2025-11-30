@@ -1,0 +1,172 @@
+package restoran.vrsta;
+
+public enum VrstaHrane {
+	
+	KINESKA, INTERNACIONALNA, DOMACA, ITALIJANSKA;
+
+}
+
+package restoran;
+
+import java.util.GregorianCalendar;
+
+import restoran.vrsta.VrstaHrane;
+
+public class Restoran {
+	
+	private String naziv;
+	private VrstaHrane hrana;
+	private int ocena;
+	private GregorianCalendar datumProcene;
+	
+	public String getNaziv() {
+		return naziv;
+	}
+	
+	public void setNaziv(String naziv) {
+		if (naziv == null || naziv.isEmpty())
+			System.out.println("GRESKA");
+		else
+			this.naziv = naziv;
+	}
+	
+	public VrstaHrane getHrana() {
+		return hrana;
+	}
+	
+	public void setHrana(VrstaHrane hrana) {
+		this.hrana = hrana;
+	}
+	
+	public int getOcena() {
+		return ocena;
+	}
+	
+	public void setOcena(int ocena) {
+		if(ocena < 1 || ocena > 5)
+			System.out.println("GRESKA");
+		else
+			this.ocena = ocena;
+	}
+	
+	public GregorianCalendar getDatumProcene() {
+		return datumProcene;
+	}
+	
+	public void setDatumProcene(GregorianCalendar datumProcene) {
+		if (datumProcene == null)
+			System.out.println("GRESKA");
+		else
+			this.datumProcene = datumProcene;
+	}
+
+	@Override
+	public String toString() {
+		return "Restoran [naziv=" + naziv + ", hrana=" + hrana + 
+				", ocena=" + ocena + ", datumProcene=" + datumProcene.getTime()	+ "]";
+	}
+	
+}
+
+package restoran.vodic;
+
+import java.util.GregorianCalendar;
+
+import restoran.Restoran;
+import restoran.vrsta.VrstaHrane;
+
+public class VodicKrozRestorane {
+	
+	private Restoran[] restorani;
+	
+	public VodicKrozRestorane(int kapacitet) {
+		if (kapacitet > 0)
+			restorani = new Restoran[kapacitet];
+		else
+			restorani = new Restoran[20];
+	}
+
+	public void unesiRestoran(Restoran r) {
+		if (r == null) {
+			System.out.println("GRESKA");
+			return;
+		}
+		
+		for(int i=restorani.length-1; i>=0; i--)
+			if (restorani[i] == null) {
+				restorani[i] = r;
+				return;
+			}
+		
+		//Ovo ce se izvrsiti samo ako nije unet tj. niz je pun
+		System.out.println("GRESKA");
+	}
+	
+	public void napraviTopListu(VrstaHrane hrana, int godina) {
+		for (int i=0; i<restorani.length; i++)
+			if (restorani[i]!=null && restorani[i].getHrana()== hrana &&
+					godina == restorani[i].getDatumProcene().get(GregorianCalendar.YEAR) &&
+					restorani[i].getOcena() == 5)
+				System.out.println( restorani[i] );
+	}
+	
+	public Restoran[] napraviTopListu(VrstaHrane hrana) {
+		Restoran[] niz = new Restoran[10];
+		int brojac = 0;
+		
+		int tekucaGodina = new GregorianCalendar().get(GregorianCalendar.YEAR);
+		
+		for (int i=0; i<restorani.length; i++)
+			if (restorani[i]!= null && restorani[i].getHrana()==hrana &&
+					tekucaGodina == restorani[i].getDatumProcene().get(GregorianCalendar.YEAR) &&
+					restorani[i].getOcena() == 5 && brojac < 10) {
+				niz[brojac] = restorani[i];
+				brojac++;
+			}
+		
+		for (int i=0; i<restorani.length; i++)
+			if (restorani[i]!= null && restorani[i].getHrana()==hrana &&
+					tekucaGodina == restorani[i].getDatumProcene().get(GregorianCalendar.YEAR) &&
+					restorani[i].getOcena() == 4 && brojac < 10) {
+				niz[brojac] = restorani[i];
+				brojac++;
+			}
+		
+		return niz;
+		
+	}
+	
+}
+
+
+package ispravka_koda;
+
+public class StringIspisivac2 {
+	public static void ispisiDijagonalno(String[] niz) {
+		String prazno = "";
+		int j = 0;
+		while (j < 5) {
+			String s = "";
+			for (int i = 0; i < niz.length; i++)
+				if (j < niz[i].length())
+					s = s + niz[i].charAt(j);
+				else
+					s = s + " ";
+			System.out.println(prazno + s);
+			prazno = prazno + " ";
+			j++;
+		}
+	}
+}
+
+package ispravka_koda;
+
+public class ProbaStringIspisivac {
+
+	public static void main(String[] args) {
+		String[] niz = {"PAS", "MACKA", "LOPTA", "DRVO"};
+		
+		StringIspisivac2.ispisiDijagonalno(niz);
+	}
+
+}
